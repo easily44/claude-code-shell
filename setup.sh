@@ -122,6 +122,7 @@ cat << 'EOF' > claude_config/.claude/kimi.json
 }
 EOF
 
+# 9. 写入 openrouter.json
 cat << 'EOF' > claude_config/.claude/openrouter.json
 {
   "env": {
@@ -140,7 +141,27 @@ cat << 'EOF' > claude_config/.claude/openrouter.json
 }
 EOF
 
-# 9. 修改文件夹权限
+# 10. 写入 baidu.json
+# https://console.bce.baidu.com/qianfan/resource/subscribe
+cat << 'EOF' > claude_config/.claude/baidu.json
+{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+    "ANTHROPIC_BASE_URL": "https://qianfan.baidubce.com/anthropic/coding",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "minimax-m2.5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "kimi-k2.5",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "glm-5",
+    "ENABLE_TOOL_SEARCH": 0,
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": 1,
+    "API_TIMEOUT_MS": "3000000",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
+  },
+  "skipDangerousModePermissionPrompt": true
+}
+EOF
+
+# 11. 修改文件夹权限
 chmod -R 777 claude_config
 
 echo "----------------------------------------"
