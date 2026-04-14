@@ -40,6 +40,7 @@ RUN echo "alias cc='claude --dangerously-skip-permissions'" >> /home/claudeuser/
 RUN echo "alias glm='ln -sf /home/claudeuser/.claude/glm.json /home/claudeuser/.claude/settings.json'" >> /home/claudeuser/.bashrc
 RUN echo "alias kimi='ln -sf /home/claudeuser/.claude/kimi.json /home/claudeuser/.claude/settings.json'" >> /home/claudeuser/.bashrc
 RUN echo "alias openrouter='ln -sf /home/claudeuser/.claude/openrouter.json /home/claudeuser/.claude/settings.json'" >> /home/claudeuser/.bashrc
+RUN echo "alias baidu='ln -sf /home/claudeuser/.claude/baidu.json /home/claudeuser/.claude/settings.json'" >> /home/claudeuser/.bashrc
 
 CMD ["/bin/bash"]
 EOF
@@ -64,7 +65,7 @@ docker run -it \
 
 ## 切换模型
 
-`glm`、`kimi`
+`glm`、`kimi`、`openrouter`、`baidu`
 
 ## 启动claude code
 
