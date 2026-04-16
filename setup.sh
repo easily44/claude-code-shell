@@ -21,13 +21,22 @@ FROM docker.1ms.run/node:24-bookworm-slim
 
 RUN apt-get update && apt-get install -y git # && rm -rf /var/lib/apt/lists/*
 
-# 全局安装 Claude Code
-RUN npm install -g @anthropic-ai/claude-code
+# 定义一个变量，使得每次安装最新版claude-code
+ARG CACHE_BUST=1
 
-RUN apt-get install -y curl vim
+# 将变量放在安装命令之前
+RUN echo "Building version: $CACHE_BUST" && \
+    npm install -g @anthropic-ai/claude-code
+
+# RUN npm install -g @anthropic-ai/claude-code
+
+RUN apt-get install -y curl vim sudo
 
 # 创建一个非 root 用户
 RUN useradd -m -u 1001 claudeuser
+# 给 claudeuser 设置无密码 sudo 权限，sudo -i 就能变身 root
+RUN echo "claudeuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
 USER claudeuser
 
 RUN echo '{"hasCompletedOnboarding": true}' > /home/claudeuser/.claude.json
@@ -50,7 +59,7 @@ cat << 'EOF' > README.md
 ## 构建镜像
 
 ```bash
-docker build -t claude-code .
+docker build --build-arg CACHE_BUST=$(date +%s) -t claude-code .
 ```
 
 ## 启动
